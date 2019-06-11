@@ -47,12 +47,15 @@ function initMap() {
                         icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                     });
                     marker.setMap(map);
+                    var newDiv = $("<div>");
+                    newDiv.addClass('results-div')
                     var newButton = $("<button>");
+                    newButton.addClass("btn-small waves-effect waves-light orange reviews")
                     var name = "<br>" + response.businesses[i].name + "<br>";
                     var id = response.businesses[i].id;
                     var imageDiv = $("<img>");
                     imageDiv.attr('src', response.businesses[i].image_url);
-                    imageDiv.css({ 'width': 200, 'height': 200 });
+                    imageDiv.css({ 'width': 200, 'height': 200, float: "left"});
                     var isOpen;
                     if (response.businesses[i].is_closed === true) {
                         isOpen = "<br> Open!";
@@ -60,13 +63,19 @@ function initMap() {
                     else {
                         isOpen = "<br> Closed!";
                     }
+                    newTextDiv = $("<div>");
+                    newTextDiv.attr("id", id);
                     newButton.attr("data-id", id);
+                    newButton.css({float: "left"});
                     newButton.addClass('places');
-                    newButton.append(name);
-                    newButton.append(imageDiv);
-                    newButton.append(isOpen);
+                    newButton.text("Reviews");
+                    newDiv.append(imageDiv);
+                    newDiv.append(newButton);
+                    newDiv.append(newTextDiv);
+                    newDiv.append(isOpen);
                     $("#results").append("<br>");
-                    $("#results").append(newButton);
+                    $("#results").append(name);
+                    $("#results").append(newDiv);
                     $("#results").append("<br>");
                 }
             })
@@ -86,6 +95,9 @@ $(document).on("click", ".places", function () {
         }
     }).then(function(response){
         console.log(response);
+        for (var i = 0; i < response.reviews.length; i++) {
+            $("#" + placeID).append($("<p>").text(response.reviews[i].text), "<br>");   
+        }
     })
 })
 

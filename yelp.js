@@ -34,6 +34,7 @@ function initMap() {
                     authorization: "Bearer 4Rm7FqyoBh0DGVD6bV936T1y38wYSXyOiQBtQsIza6j_MZVWcPuLtT7x_06Ej7j5TN4ZFgsOAxlj_FHlQrjgyfYbXsGuYjQeamj84ii533Ii5sTH4wKUUjhqNqf6XHYx"
                 }
             }).then(function (response) {
+                console.log(response);
                 for (var i = 0; i < response.businesses.length; i++) {
                     var yelpPos = {
                         lat: response.businesses[i].coordinates.latitude,
@@ -46,6 +47,25 @@ function initMap() {
                         icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                     });
                     marker.setMap(map);
+                    var newDiv = $("<div>");
+                    var name = "<br>" + response.businesses[i].name + "<br>";
+                    var id = response.businesses[i].id;
+                    var imageDiv = $("<img>");
+                    imageDiv.attr('src', response.businesses[i].image_url);
+                    imageDiv.css({'width': 200, 'height': 200});
+                    var isOpen;
+                    if (response.businesses[i].is_closed === true) {
+                        isOpen = "<br> Open!";
+                    }
+                    else {
+                        isOpen = "<br> Closed!";
+                    }
+                    newDiv.attr("yelp-" + i, id);
+                    newDiv.append(name);
+                    newDiv.append(imageDiv);
+                    newDiv.append(isOpen);
+                    $("#results").append(newDiv);
+
                 }
             })
         })

@@ -15,11 +15,20 @@ console.log(queryURL)
             };
             console.log(position);
             console.log(pos.lat);
+            console.log(pos.lng);
 
             map = new google.maps.Map(document.getElementById ("map"), {
                 center: { lat: pos.lat, lng: pos.lng},
                 zoom: 15
             });
+
+//marker
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                title: "You are here.", 
+                icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
+            })
         })
     }
 }

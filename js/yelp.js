@@ -57,7 +57,7 @@ function initMap() {
                     imageDiv.attr('src', response.businesses[i].image_url);
                     imageDiv.css({ 'width': 200, 'height': 200, float: "left"});
                     var isOpen;
-                    if (response.businesses[i].is_closed === true) {
+                    if (response.businesses[i].is_closed === false) {
                         isOpen = "<br> Open!";
                     }
                     else {

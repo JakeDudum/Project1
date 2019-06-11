@@ -15,7 +15,7 @@
 <body>
 
     <nav class="light-blue lighten-1" role="navigation">
-        <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+        <div class="nav-wrapper"><img id="logo-container" src="images/logo.png" class="brand-logo">
             <ul class="right hide-on-med-and-down">
                 <li><a href="#">Navbar Link</a></li>
             </ul>
@@ -27,7 +27,7 @@
         </div>
     </nav>
 
-    <div class="section">
+    <div class="section light-blue darken-4">
         <div class="row">
             <div class="col s12 m5">
                 <div class="icon-block">
@@ -38,6 +38,25 @@
             <div class="col s12 m7">
                 <div class="icon-block">
                     <h4 class="center light-blue-text"><i class="material-icons">search</i> Search</h4>
+                </div>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s5">
+                                <input id="address" type="text" class="validate">
+                                <label for="address">Address</label>
+                            </div>
+                            <div class="input-field col s5">
+                                <input id="city" type="text" class="validate">
+                                <label for="city">City</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <input id="state" type="text" class="validate">
+                                <label for="state">State</label>
+                            </div>
+                            <button id="submit" class="btn-large waves-effect waves-light orange">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -54,9 +73,6 @@
 
     </div>
     <br><br>
-
-    <a href="http://materializecss.com/getting-started.html" id="download-button"
-        class="btn-large waves-effect waves-light orange">Get Started</a>
 
     <!--  Scripts-->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

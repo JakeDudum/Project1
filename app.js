@@ -5,8 +5,7 @@ var map, infoWindow;
 var pos = {}; 
 var open, rating, image, comment; 
 function initMap() {
-    var queryURL = "https://api.yelp.com/v3/businesses/search/4Rm7FqyoBh0DGVD6bV936T1y38wYSXyOiQBtQsIza6j_MZVWcPuLtT7x_06Ej7j5TN4ZFgsOAxlj_FHlQrjgyfYbXsGuYjQeamj84ii533Ii5sTH4wKUUjhqNqf6XHYx";
-console.log(queryURL)
+  
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             pos = {
@@ -22,12 +21,34 @@ console.log(queryURL)
                 zoom: 15
             });
 
-//marker
+//marker for current location
             var marker = new google.maps.Marker({
                 position: pos,
                 map: map,
                 title: "You are here.", 
                 icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
+            })
+//incorporate the google results for public restrooms
+//add herokuapp link blocked by CORS 
+            var queryURL = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Resroom&location=" + pos.lat + "," + pos.lng + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8";
+            console.log(queryURL);
+
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function(response) {
+                console.log(response);
+
+                var results = response.results;
+                console.log(results);
+
+                for (var i = 0; i < results.length; i++) {
+                    var locationPos = {
+                        lat: results[i].geometry.location.lat,
+                        lng: results[i].geometry.location.lng
+                    };
+                    console.log(locationPos);
+                }
             })
         })
     }

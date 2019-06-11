@@ -13,6 +13,13 @@
 	font-size: inherit;
 }
 
+html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
@@ -22,9 +29,9 @@ h1, h2, h3, h4, h5, h6 {
   mix-blend-mode: multiply;
 }
 
-#tempMap {
-  height: 100%;
-  width: 100%;
+#map {
+  height: 450px;
+  max-width: 100%;
 }
 
 #search-bar, #weather-section, #results-section {

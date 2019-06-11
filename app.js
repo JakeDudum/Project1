@@ -1,55 +1,84 @@
 //reminder: firebase 
 
+var photoRef;
 
 var map, infoWindow;
-var pos = {}; 
-var open, rating, image, comment; 
+var pos = {};
+var open, rating, image, comment;
 function initMap() {
-  
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-            console.log(position);
-            console.log(pos.lat);
-            console.log(pos.lng);
+            // console.log(position);
+            // console.log(pos.lat);
+            // console.log(pos.lng);
 
-            map = new google.maps.Map(document.getElementById ("map"), {
-                center: { lat: pos.lat, lng: pos.lng},
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: pos.lat, lng: pos.lng },
                 zoom: 15
             });
 
-//marker for current location
+            //marker for current location
             var marker = new google.maps.Marker({
                 position: pos,
                 map: map,
-                title: "You are here.", 
+                title: "You are here.",
                 icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
             })
-//incorporate the google results for public restrooms
-//add herokuapp link blocked by CORS 
+            //incorporate the google results for public restrooms
+            //add herokuapp link blocked by CORS 
             var queryURL = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Resroom&location=" + pos.lat + "," + pos.lng + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8";
             console.log(queryURL);
 
             $.ajax({
                 url: queryURL,
                 method: "GET"
-            }).then(function(response) {
+            }).then(function (response) {
                 console.log(response);
 
-                var results = response.results;
-                console.log(results);
+                //console.log(results);
 
-                for (var i = 0; i < results.length; i++) {
+                for (var i = 0; i < response.results.length; i++) {
                     var locationPos = {
-                        lat: results[i].geometry.location.lat,
-                        lng: results[i].geometry.location.lng
+                        lat: response.results[i].geometry.location.lat,
+                        lng: response.results[i].geometry.location.lng
                     };
                     console.log(locationPos);
+
+                    //photo reference ID
+                    photoRef = response.results[i].photos[0]["photo_reference"];
+                    console.log("photo: " + photoRef);
+                    console.log(response.results[i].photos[0]["photo_reference"]);
+
+                    $("#result").append(
+                        "<br>" + response.results[i].name + "</br>" +
+                        "<p>" + response.results[i].formatted_address + "</p>" +
+                        "<p>" + response.results[i].rating + "</p>"
+                        + "<p><img src='https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='" + photoRef + "'&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8'/></p>"
+                    );
+
+                    //if (!response.results[i])
+                    
                 }
-            })
+
+            });
+
+            var queryURL = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8";
+            console.log("photo...: " + queryURL);
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response);
+            });
         })
     }
 }
+
+
+                  
+       

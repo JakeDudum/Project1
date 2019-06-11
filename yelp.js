@@ -61,6 +61,7 @@ function initMap() {
                         isOpen = "<br> Closed!";
                     }
                     newDiv.attr("yelp-" + i, id);
+                    newDiv.addClass('places');
                     newDiv.append(name);
                     newDiv.append(imageDiv);
                     newDiv.append(isOpen);

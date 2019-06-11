@@ -20,3 +20,19 @@ h1, h2, h3, h4, h5, h6 {
 img {
   max-height: 100%;
 }
+
+#tempMap {
+  height: 100%;
+  width: 100%;
+}
+
+#search-bar, #weather-section, #results-section {
+  transition: all 0.2s linear;
+}
+
+#search-bar:hover, #weather-section:hover, #results-section:hover { 
+  border-width: 5px; 
+  border-color: #80cbc4;
+  border-style: solid;
+  border-radius: 5px;
+}

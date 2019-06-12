@@ -49,6 +49,12 @@ function initMap() {
                         lat: response.results[i].geometry.location.lat,
                         lng: response.results[i].geometry.location.lng
                     };
+                    var marker = new google.maps.Marker({
+                        position: locationPos,
+                        map: map,
+                        title: response.results[i].formatted_address
+                    });
+                    marker.setMap(map);
 
                     //console.log(locationPos);
                     if (response.results[i].photos === undefined) {

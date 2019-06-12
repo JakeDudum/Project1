@@ -51,17 +51,18 @@ function initMap() {
                     newDiv.addClass('results-div')
                     var newButton = $("<button>");
                     newButton.addClass("btn-small waves-effect waves-light orange reviews")
-                    var name = "<br>" + response.businesses[i].name + "<br>";
+                    var name = $("<p>").text(response.businesses[i].name);
+                    name.addClass("business");
                     var id = response.businesses[i].id;
                     var imageDiv = $("<img>");
                     imageDiv.attr('src', response.businesses[i].image_url);
                     imageDiv.css({ 'width': 200, 'height': 200, float: "left"});
                     var isOpen;
                     if (response.businesses[i].is_closed === false) {
-                        isOpen = "<br> Open!";
+                        isOpen = $("<p>").text("Open!");
                     }
                     else {
-                        isOpen = "<br> Closed!";
+                        isOpen = $("<p>").text("Closed!");
                     }
                     newTextDiv = $("<div>");
                     newTextDiv.attr("id", id);
@@ -69,14 +70,12 @@ function initMap() {
                     newButton.css({float: "left"});
                     newButton.addClass('places');
                     newButton.text("Reviews");
+                    newDiv.append(name);
                     newDiv.append(imageDiv);
+                    newDiv.append(isOpen);
                     newDiv.append(newButton);
                     newDiv.append(newTextDiv);
-                    newDiv.append(isOpen);
-                    $("#results").append("<br>");
-                    $("#results").append(name);
                     $("#results").append(newDiv);
-                    $("#results").append("<br>");
                 }
             })
         })

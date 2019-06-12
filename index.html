@@ -36,7 +36,8 @@
         <div class="row">
             <div id="weather-section" class="col s12 m5">
                 <h4 class="light-blue-text"><i class="material-icons">wb_sunny</i> Weather</h4>
-                <div id="weather"></div>
+                    <div id="openweathermap-widget-15"></div>
+                    <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 15,cityid: '5391959',appid: '945c3adf4a846dc18d8b8ed754fe7142',units: 'imperial',containerid: 'openweathermap-widget-15',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
             </div>
 
             <div id="search-bar" class="col s12 m7">
@@ -73,7 +74,6 @@
             </div>
         </div>
     </div>
-    <br><br><br><br><br><br>
 
     <!--  Scripts-->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>

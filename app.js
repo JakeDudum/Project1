@@ -44,66 +44,40 @@ function initMap() {
 
                 for (var i = 0; i < response.results.length; i++) {
                     //console.log('response.results.length  '+response.results.length); 
-                    
+
                     var locationPos = {
                         lat: response.results[i].geometry.location.lat,
                         lng: response.results[i].geometry.location.lng
                     };
-                   //console.log(locationPos);
-                    if(response.results[i].photos === undefined){
 
-                    }else{
+                    //console.log(locationPos);
+                    if (response.results[i].photos === undefined) {
+
+                    } else {
                         //photo reference ID
                         photoRef = response.results[i].photos[0]["photo_reference"];
                         console.log("photo: " + photoRef);
                         console.log(response.results[i].photos[0]["photo_reference"]);
 
-                        // $("#result").append(
-                        //     "<br>" + response.results[i].name + "</br>" +
-                        //     "<p>" + response.results[i].formatted_address + "</p>" +
-                        //     "<p> Rating: " + response.results[i].rating + "</p>"
-                        //     // + "<p><img src='https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='" + photoRef + "'&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8'/></p>"
-                        // );
+                        var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8"
 
-                            var newDiv = $("<div>");
-                            newDiv.addClass("results-div");
-                            var newButton = $("<button>"); 
-                            var name = "<br>" + response.results[i].name + "<br>"; 
-                            console.log("name: " + name);
-                            var photoId = response.results[i].photos[0]["photo_reference"];
-                            console.log("photoid: "+ photoId);
+
+                        $("#result").append(
+                            "<br>" + response.results[i].name + "</br>" +
+                            "<p>" + response.results[i].formatted_address + "</p>" +
+                            "<p> Rating: " + response.results[i].rating + "</p>"  
+                            + "<p> photo: <img src='" + photoURL + "'/> </p>"                          
+                        );
+                    
 
 
                     }
-
-                    
-
-                    //if (!response.results[i])
-                    
-
-
-
-
-
-
-
 
                 }
 
             });
 
-            // var queryURL = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8";
-            // console.log("photo...: " + queryURL);
-            // $.ajax({
-            //     url: queryURL,
-            //     method: "GET"
-            // }).then(function (response) {
-            //     console.log(response);
-            // });
+
         })
     }
 }
-
-
-                  
-       

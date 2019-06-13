@@ -41,7 +41,7 @@ $(document).on('click', ".submit-reviews", function () {
 });
 
 
-var map, infoWindow;
+var map;
 var pos = {};
 
 function initMap() {
@@ -108,7 +108,7 @@ function initMap() {
                     var marker = new google.maps.Marker({
                         position: yelpPos,
                         map: map,
-                        title: response.businesses[i].alias,
+                        title: response.businesses[i].name,
                         animation: google.maps.Animation.DROP,
                         icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                     });
@@ -117,6 +117,7 @@ function initMap() {
                     var newButton = $("<button>").addClass("btn-small waves-effect waves-light orange reviews")
                     var name = $("<p>").text(response.businesses[i].name).addClass("business");
                     var id = response.businesses[i].id;
+                    var rating = "Rating: " + response.businesses[i].rating;
                     var imageDiv = $("<img>").attr('src', response.businesses[i].image_url);
                     imageDiv.addClass("placeImg");
                     var isOpen;
@@ -130,7 +131,7 @@ function initMap() {
                     newButton.css({ float: "left" });
                     newButton.addClass('submit-reviews');
                     newButton.text("Submit Review");
-                    newDiv.append(name, imageDiv, isOpen, newButton);
+                    newDiv.append(name, imageDiv, rating, isOpen, newButton);
 
                     var inputField1 = $("<div>").addClass('input-field');
                     var inputField2 = $("<div>").addClass('input-field');
@@ -155,18 +156,14 @@ function initMap() {
                     $("#results").append(newDiv);
                 }
             })
-
             $.ajax({
                 url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Resroom&location=" + pos.lat + "," + pos.lng + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8",
                 method: "GET"
             }).then(function (response) {
                 console.log(response);
-
                 //console.log(results);
-
                 for (var i = 0; i < response.results.length; i++) {
                     //console.log('response.results.length  '+response.results.length); 
-
                     var locationPos = {
                         lat: response.results[i].geometry.location.lat,
                         lng: response.results[i].geometry.location.lng
@@ -178,34 +175,24 @@ function initMap() {
                         animation: google.maps.Animation.DROP,
                     });
                     marker.setMap(map);
-
                     //console.log(locationPos);
                     if (response.results[i].photos === undefined) {
-
-                    } else {
+                    } 
+                    else {
                         //photo reference ID
                         photoRef = response.results[i].photos[0]["photo_reference"];
                         console.log("photo: " + photoRef);
                         console.log(response.results[i].photos[0]["photo_reference"]);
-
-                        var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8"
-
-
+                        var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8";
                         $("#results2").append(
                             "<br>" + response.results[i].name + "</br>" +
                             "<p>" + response.results[i].formatted_address + "</p>" +
                             "<p> Rating: " + response.results[i].rating + "</p>"
                             + "<p> photo: <img src='" + photoURL + "'/> </p>"
                         );
-
-
-
                     }
-
                 }
-
             });
-
         })
     }
 }
@@ -248,100 +235,101 @@ function initMapOnSubmit(address, city, state) {
         $.ajax({
             url: 'https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?lat=' + locationPos.lat + '&lon=' + locationPos.lng + '&units=imperial&appid=' + apiKey,
             method: "GET"
-    
+
         }).then(function (response) {
             console.log(response);
-    
+
             var weatherCityId = response.id;
-    
+
             console.log(weatherCityId);
             $('#openweathermap-widget-15').empty();
             // newWeatherDiv.append(name + currentTemp);
             // $("#weather").append(newWeatherDiv);
             window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; window.myWidgetParam.push({ id: 15, cityid: weatherCityId, appid: '945c3adf4a846dc18d8b8ed754fe7142', units: 'imperial', containerid: 'openweathermap-widget-15', }); (function () { var script = document.createElement('script'); script.async = true; script.charset = "utf-8"; script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js"; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s); })();
             // $("#openweathermap-widget-9").append(windowWidget);
-    
+
         });
 
         var queryURL = 'https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=public+restroom&location=' + address + ' ' + city + ' ' + state + '&radius=5000&limit=15&attributes=gender_neutral_restrooms';
-    $.ajax({
-        url: queryURL,
-        method: "GET",
-        headers: {
-            authorization: "Bearer 4Rm7FqyoBh0DGVD6bV936T1y38wYSXyOiQBtQsIza6j_MZVWcPuLtT7x_06Ej7j5TN4ZFgsOAxlj_FHlQrjgyfYbXsGuYjQeamj84ii533Ii5sTH4wKUUjhqNqf6XHYx"
-        }
-    }).then(function (response) {
-        console.log(response);
-        for (var i = 0; i < response.businesses.length; i++) {
-            var yelpPos = {
-                lat: response.businesses[i].coordinates.latitude,
-                lng: response.businesses[i].coordinates.longitude
-            };
-            var marker = new google.maps.Marker({
-                position: yelpPos,
-                map: map,
-                title: response.businesses[i].alias,
-                animation: google.maps.Animation.DROP,
-                icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-            });
-            marker.setMap(map);
-            var newDiv = $("<div>");
-            newDiv.addClass('results-div')
-            var newButton = $("<button>");
-            newButton.addClass("btn-small waves-effect waves-light orange reviews")
-            var name = $("<p>").text(response.businesses[i].name);
-            name.addClass("business");
-            var id = response.businesses[i].id;
-            var imageDiv = $("<img>").addClass("placeImg");
-            imageDiv.attr('src', response.businesses[i].image_url);
-            var isOpen;
-            if (response.businesses[i].is_closed === false) {
-                isOpen = $("<p>").text("Open!");
+        $.ajax({
+            url: queryURL,
+            method: "GET",
+            headers: {
+                authorization: "Bearer 4Rm7FqyoBh0DGVD6bV936T1y38wYSXyOiQBtQsIza6j_MZVWcPuLtT7x_06Ej7j5TN4ZFgsOAxlj_FHlQrjgyfYbXsGuYjQeamj84ii533Ii5sTH4wKUUjhqNqf6XHYx"
             }
-            else {
-                isOpen = $("<p>").text("Closed!");
+        }).then(function (response) {
+            console.log(response);
+            for (var i = 0; i < response.businesses.length; i++) {
+                var yelpPos = {
+                    lat: response.businesses[i].coordinates.latitude,
+                    lng: response.businesses[i].coordinates.longitude
+                };
+                var marker = new google.maps.Marker({
+                    position: yelpPos,
+                    map: map,
+                    title: response.businesses[i].name,
+                    animation: google.maps.Animation.DROP,
+                    icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                });
+                marker.setMap(map);
+                var newDiv = $("<div>");
+                newDiv.addClass('results-div')
+                var newButton = $("<button>");
+                newButton.addClass("btn-small waves-effect waves-light orange reviews")
+                var name = $("<p>").text(response.businesses[i].name);
+                name.addClass("business");
+                var id = response.businesses[i].id;
+                var rating = "Rating: " + response.businesses[i].rating;
+                var imageDiv = $("<img>").addClass("placeImg");
+                imageDiv.attr('src', response.businesses[i].image_url);
+                var isOpen;
+                if (response.businesses[i].is_closed === false) {
+                    isOpen = $("<p>").text("Open!");
+                }
+                else {
+                    isOpen = $("<p>").text("Closed!");
+                }
+                newButton.attr("data-id", id);
+                newButton.css({ float: "left" });
+                newButton.addClass('submit-reviews');
+                newButton.text("Submit Review");
+                newDiv.append(name, imageDiv, rating, isOpen, newButton);
+
+                var inputField1 = $("<div>").addClass('input-field');
+                var inputField2 = $("<div>").addClass('input-field');
+                var form = $("<form>").addClass('submit-form');
+                form.attr('id', id);
+                var userNameInput = $('<input>').attr('id', 'userName');
+                userNameInput.attr('type', 'text');
+                var userReviewInput = $('<textarea>').attr("id", 'userReview');
+                userReviewInput.addClass('materialize-textarea');
+                var nameLabel = $('<label>').attr('for', 'username');
+                nameLabel.text("Name");
+                var reviewLabel = $('<label>').attr('for', 'userReview');
+                reviewLabel.text("Review");
+
+                inputField1.append(userNameInput, nameLabel);
+                inputField2.append(userReviewInput, reviewLabel);
+
+                form.append(inputField1, inputField2);
+                form.addClass('hide');
+
+                newDiv.append(form);
+                $("#results").append(newDiv);
             }
-            newButton.attr("data-id", id);
-            newButton.css({ float: "left" });
-            newButton.addClass('submit-reviews');
-            newButton.text("Submit Review");
-            newDiv.append(name, imageDiv, isOpen, newButton);
-
-            var inputField1 = $("<div>").addClass('input-field');
-            var inputField2 = $("<div>").addClass('input-field');
-            var form = $("<form>").addClass('submit-form');
-            form.attr('id', id);
-            var userNameInput = $('<input>').attr('id', 'userName');
-            userNameInput.attr('type', 'text');
-            var userReviewInput = $('<textarea>').attr("id", 'userReview');
-            userReviewInput.addClass('materialize-textarea');
-            var nameLabel = $('<label>').attr('for', 'username');
-            nameLabel.text("Name");
-            var reviewLabel = $('<label>').attr('for', 'userReview');
-            reviewLabel.text("Review");
-
-            inputField1.append(userNameInput, nameLabel);
-            inputField2.append(userReviewInput, reviewLabel);
-
-            form.append(inputField1, inputField2);
-            form.addClass('hide');
-
-            newDiv.append(form);
-            $("#results").append(newDiv);
-        }
-    });
+        });
 
         $.ajax({
             url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Restroom&location=" + locationPos.lat + "," + locationPos.lng + "&radius=5000&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8",
             method: "GET"
         }).then(function (response) {
             console.log(response);
-    
+
             //console.log(results);
-    
+
             for (var i = 0; i < response.results.length; i++) {
                 //console.log('response.results.length  '+response.results.length); 
-    
+
                 var locationPos = {
                     lat: response.results[i].geometry.location.lat,
                     lng: response.results[i].geometry.location.lng
@@ -353,17 +341,17 @@ function initMapOnSubmit(address, city, state) {
                     animation: google.maps.Animation.DROP,
                 });
                 marker.setMap(map);
-    
+
                 //console.log(locationPos);
                 if (response.results[i].photos === undefined) {
-    
+
                 } else {
                     //photo reference ID
                     photoRef = response.results[i].photos[0]["photo_reference"];
                     console.log("photo: " + photoRef);
                     console.log(response.results[i].photos[0]["photo_reference"]);
                     var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8";
-    
+
                     $("#results2").append(
                         "<br>" + response.results[i].name + "</br>" +
                         "<p>" + response.results[i].formatted_address + "</p>" +
@@ -389,5 +377,4 @@ $("#submit").on("click", function () {
     $("#address").val("");
     $("#city").val("");
     $("#state").val("");
-
 })

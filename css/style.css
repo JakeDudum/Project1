@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 #map {
-  height: 475px;
+  height: 500px;
   max-width: 100%;
 }
 .results-div {
@@ -79,7 +79,7 @@ p {
   text-align: center;
 }
 
-#search-bar, #weather-section, #results-section {
+#search-bar, #weather-section, #results-section, #results-section2, #map {
   transition: all 0.3s linear;
   border-width: 5px;
   border-radius: 5px;
@@ -87,7 +87,7 @@ p {
   border-color: transparent;
 }
 
-#search-bar:hover, #weather-section:hover, #results-section:hover { 
+#search-bar:hover, #weather-section:hover, #results-section:hover, #results-section2:hover, #map:hover { 
   border-color: #80cbc4;
 }
 
@@ -95,21 +95,21 @@ p {
   font-size: 30px;
 }
 
-#results {
+#results, #results2 {
   max-height: 450px;
   overflow: auto;
 }
 
-#results::-webkit-scrollbar {
+#results::-webkit-scrollbar, #results2::-webkit-scrollbar {
   width: 1em;
 }
 
-#results::-webkit-scrollbar-track {
+#results::-webkit-scrollbar-track, #results2::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
 
-#results::-webkit-scrollbar-thumb {
+#results::-webkit-scrollbar-thumb, #results2::-webkit-scrollbar-thumb {
 background-color: darkgrey;
 outline: 1px solid slategrey;
 }

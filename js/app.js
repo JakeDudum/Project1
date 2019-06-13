@@ -64,6 +64,7 @@ function initMap() {
                 position: pos,
                 map: map,
                 title: "You are here.",
+                animation: google.maps.Animation.DROP,
                 icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
             })
             marker.setMap(map);
@@ -108,6 +109,7 @@ function initMap() {
                         position: yelpPos,
                         map: map,
                         title: response.businesses[i].alias,
+                        animation: google.maps.Animation.DROP,
                         icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                     });
                     marker.setMap(map);
@@ -153,6 +155,57 @@ function initMap() {
                     $("#results").append(newDiv);
                 }
             })
+
+            $.ajax({
+                url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Resroom&location=" + pos.lat + "," + pos.lng + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8",
+                method: "GET"
+            }).then(function (response) {
+                console.log(response);
+
+                //console.log(results);
+
+                for (var i = 0; i < response.results.length; i++) {
+                    //console.log('response.results.length  '+response.results.length); 
+
+                    var locationPos = {
+                        lat: response.results[i].geometry.location.lat,
+                        lng: response.results[i].geometry.location.lng
+                    };
+                    var marker = new google.maps.Marker({
+                        position: locationPos,
+                        map: map,
+                        title: response.results[i].formatted_address,
+                        animation: google.maps.Animation.DROP,
+                    });
+                    marker.setMap(map);
+
+                    //console.log(locationPos);
+                    if (response.results[i].photos === undefined) {
+
+                    } else {
+                        //photo reference ID
+                        photoRef = response.results[i].photos[0]["photo_reference"];
+                        console.log("photo: " + photoRef);
+                        console.log(response.results[i].photos[0]["photo_reference"]);
+
+                        var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8"
+
+
+                        $("#results2").append(
+                            "<br>" + response.results[i].name + "</br>" +
+                            "<p>" + response.results[i].formatted_address + "</p>" +
+                            "<p> Rating: " + response.results[i].rating + "</p>"
+                            + "<p> photo: <img src='" + photoURL + "'/> </p>"
+                        );
+
+
+
+                    }
+
+                }
+
+            });
+
         })
     }
 }
@@ -181,36 +234,36 @@ function initMapOnSubmit(address, city, state) {
             },
             zoom: 15
         });
-    
+
         var marker = new google.maps.Marker({
             position: locationPos,
             map: map,
             title: "You are here.",
+            animation: google.maps.Animation.DROP,
             icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
         })
         marker.setMap(map);
-    });
+
+        var apiKey = "e9d3c600773e0277e03e42289aeaf483";
+        $.ajax({
+            url: 'https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?lat=' + locationPos.lat + '&lon=' + locationPos.lng + '&units=imperial&appid=' + apiKey,
+            method: "GET"
     
-    var apiKey = "e9d3c600773e0277e03e42289aeaf483";
-    $.ajax({
-        url: 'https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?lat=' + locationPos.lat + '&lon=' + locationPos.lng + '&units=imperial&appid=' + apiKey,
-        method: "GET"
+        }).then(function (response) {
+            console.log(response);
+    
+            var weatherCityId = response.id;
+    
+            console.log(weatherCityId);
+            $('#openweathermap-widget-15').empty();
+            // newWeatherDiv.append(name + currentTemp);
+            // $("#weather").append(newWeatherDiv);
+            window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; window.myWidgetParam.push({ id: 15, cityid: weatherCityId, appid: '945c3adf4a846dc18d8b8ed754fe7142', units: 'imperial', containerid: 'openweathermap-widget-15', }); (function () { var script = document.createElement('script'); script.async = true; script.charset = "utf-8"; script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js"; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s); })();
+            // $("#openweathermap-widget-9").append(windowWidget);
+    
+        });
 
-    }).then(function (response) {
-        console.log(response);
-
-        var weatherCityId = response.id;
-
-        console.log(weatherCityId);
-        $('#openweathermap-widget-15').empty();
-        // newWeatherDiv.append(name + currentTemp);
-        // $("#weather").append(newWeatherDiv);
-        window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; window.myWidgetParam.push({ id: 15, cityid: weatherCityId, appid: '945c3adf4a846dc18d8b8ed754fe7142', units: 'imperial', containerid: 'openweathermap-widget-15', }); (function () { var script = document.createElement('script'); script.async = true; script.charset = "utf-8"; script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js"; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s); })();
-        // $("#openweathermap-widget-9").append(windowWidget);
-
-    });
-
-    var queryURL = 'https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=public+restroom&location=' + address + ' ' + city + ' ' + state + '&radius=5000&limit=15&attributes=gender_neutral_restrooms';
+        var queryURL = 'https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=public+restroom&location=' + address + ' ' + city + ' ' + state + '&radius=5000&limit=15&attributes=gender_neutral_restrooms';
     $.ajax({
         url: queryURL,
         method: "GET",
@@ -228,6 +281,7 @@ function initMapOnSubmit(address, city, state) {
                 position: yelpPos,
                 map: map,
                 title: response.businesses[i].alias,
+                animation: google.maps.Animation.DROP,
                 icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
             });
             marker.setMap(map);
@@ -275,12 +329,57 @@ function initMapOnSubmit(address, city, state) {
             newDiv.append(form);
             $("#results").append(newDiv);
         }
-    })
+    });
+
+        $.ajax({
+            url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Restroom&location=" + locationPos.lat + "," + locationPos.lng + "&radius=5000&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8",
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+    
+            //console.log(results);
+    
+            for (var i = 0; i < response.results.length; i++) {
+                //console.log('response.results.length  '+response.results.length); 
+    
+                var locationPos = {
+                    lat: response.results[i].geometry.location.lat,
+                    lng: response.results[i].geometry.location.lng
+                };
+                var marker = new google.maps.Marker({
+                    position: locationPos,
+                    map: map,
+                    title: response.results[i].formatted_address,
+                    animation: google.maps.Animation.DROP,
+                });
+                marker.setMap(map);
+    
+                //console.log(locationPos);
+                if (response.results[i].photos === undefined) {
+    
+                } else {
+                    //photo reference ID
+                    photoRef = response.results[i].photos[0]["photo_reference"];
+                    console.log("photo: " + photoRef);
+                    console.log(response.results[i].photos[0]["photo_reference"]);
+                    var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8";
+    
+                    $("#results2").append(
+                        "<br>" + response.results[i].name + "</br>" +
+                        "<p>" + response.results[i].formatted_address + "</p>" +
+                        "<p> Rating: " + response.results[i].rating + "</p>"
+                        + "<p> photo: <img src='" + photoURL + "'/> </p>"
+                    );
+                }
+            }
+        });
+    });
 }
 
 $("#submit").on("click", function () {
     event.preventDefault();
     $("#results").empty();
+    $("#results2").empty();
     var address = $("#address").val();
     var city = $("#city").val();
     var state = $("#state").val();

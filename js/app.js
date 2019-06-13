@@ -111,12 +111,12 @@ function initMap() {
                         icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                     });
                     marker.setMap(map);
-                    var newDiv = $("<div>").addClass('results-div')
-                    var newButton = $("<button>").addClass("btn-small waves-effect waves-light orange reviews")
+                    var newDiv = $("<div>").addClass('row results-div');
+                    var addReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
                     var name = $("<p>").text(response.businesses[i].name).addClass("business");
                     var id = response.businesses[i].id;
                     var imageDiv = $("<img>").attr('src', response.businesses[i].image_url);
-                    imageDiv.addClass("placeImg");
+                    imageDiv.addClass("col s4 placeImg");
                     var isOpen;
                     if (response.businesses[i].is_closed === false) {
                         isOpen = $("<p>").text("Open!");
@@ -124,20 +124,28 @@ function initMap() {
                     else {
                         isOpen = $("<p>").text("Closed!");
                     }
-                    newButton.attr("data-id", id);
-                    newButton.css({ float: "left" });
-                    newButton.addClass('submit-reviews');
-                    newButton.text("Submit Review");
-                    newDiv.append(name, imageDiv, isOpen, newButton);
+
+                    var seeReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                    seeReview.attr("data-id", id);
+                    seeReview.css({ float: "left" });
+                    seeReview.addClass('see-reviews');
+                    seeReview.text("See Reviews");
+
+                    addReview.attr("data-id", id);
+                    addReview.css({ float: "left" });
+                    addReview.addClass('submit-reviews');
+                    addReview.text("Submit Review");
+                    newDiv.append(name, imageDiv, isOpen, seeReview, addReview);
 
                     var inputField1 = $("<div>").addClass('input-field');
                     var inputField2 = $("<div>").addClass('input-field');
-                    var form = $("<form>").addClass('submit-form');
+                    var form = $("<form>").addClass('col s8 submit-form');
                     form.attr('id', id);
                     var userNameInput = $('<input>').attr('id', 'userName');
                     userNameInput.attr('type', 'text');
+                    userNameInput.addClass('row');
                     var userReviewInput = $('<textarea>').attr("id", 'userReview');
-                    userReviewInput.addClass('materialize-textarea');
+                    userReviewInput.addClass('row materialize-textarea');
                     var nameLabel = $('<label>').attr('for', 'username');
                     nameLabel.text("Name");
                     var reviewLabel = $('<label>').attr('for', 'userReview');
@@ -232,9 +240,9 @@ function initMapOnSubmit(address, city, state) {
             });
             marker.setMap(map);
             var newDiv = $("<div>");
-            newDiv.addClass('results-div')
-            var newButton = $("<button>");
-            newButton.addClass("btn-small waves-effect waves-light orange reviews")
+            newDiv.addClass('row results-div')
+            var addReview = $("<button>");
+            addReview.addClass("btn-small waves-effect waves-light orange reviews")
             var name = $("<p>").text(response.businesses[i].name);
             name.addClass("business");
             var id = response.businesses[i].id;
@@ -247,11 +255,17 @@ function initMapOnSubmit(address, city, state) {
             else {
                 isOpen = $("<p>").text("Closed!");
             }
-            newButton.attr("data-id", id);
-            newButton.css({ float: "left" });
-            newButton.addClass('submit-reviews');
-            newButton.text("Submit Review");
-            newDiv.append(name, imageDiv, isOpen, newButton);
+            var seeReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+            seeReview.attr("data-id", id);
+            seeReview.css({ float: "left" });
+            seeReview.addClass('see-reviews');
+            seeReview.text("See Reviews");
+
+            addReview.attr("data-id", id);
+            addReview.css({ float: "left" });
+            addReview.addClass('submit-reviews');
+            addReview.text("Submit Review");
+            newDiv.append(name, imageDiv, isOpen, addReview);
 
             var inputField1 = $("<div>").addClass('input-field');
             var inputField2 = $("<div>").addClass('input-field');

@@ -67,6 +67,27 @@ function initMap() {
                 icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
             })
             marker.setMap(map);
+
+            var apiKey = "e9d3c600773e0277e03e42289aeaf483";
+
+            $.ajax({
+                url: 'https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?lat=' + pos.lat + '&lon=' + pos.lng + '&units=imperial&appid=' + apiKey,
+                method: "GET"
+
+            }).then(function (response) {
+                console.log(response);
+
+                var weatherCityId = response.id;
+
+                console.log(weatherCityId);
+                $('#openweathermap-widget-15').empty();
+                // newWeatherDiv.append(name + currentTemp);
+                // $("#weather").append(newWeatherDiv);
+                window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; window.myWidgetParam.push({ id: 15, cityid: weatherCityId, appid: '945c3adf4a846dc18d8b8ed754fe7142', units: 'imperial', containerid: 'openweathermap-widget-15', }); (function () { var script = document.createElement('script'); script.async = true; script.charset = "utf-8"; script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js"; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s); })();
+                // $("#openweathermap-widget-9").append(windowWidget);
+
+            });
+
             var queryURL = 'https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=' + pos.lat + '&longitude=' + pos.lng + '&term=public+restroom&reviews&radius=10000&limit=15&attributes=gender_neutral_restrooms';
             console.log(pos.lat);
             console.log(pos.lng);
@@ -168,8 +189,27 @@ function initMapOnSubmit(address, city, state) {
             icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
         })
         marker.setMap(map);
-    })
+    });
     
+    var apiKey = "e9d3c600773e0277e03e42289aeaf483";
+    $.ajax({
+        url: 'https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?lat=' + locationPos.lat + '&lon=' + locationPos.lng + '&units=imperial&appid=' + apiKey,
+        method: "GET"
+
+    }).then(function (response) {
+        console.log(response);
+
+        var weatherCityId = response.id;
+
+        console.log(weatherCityId);
+        $('#openweathermap-widget-15').empty();
+        // newWeatherDiv.append(name + currentTemp);
+        // $("#weather").append(newWeatherDiv);
+        window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; window.myWidgetParam.push({ id: 15, cityid: weatherCityId, appid: '945c3adf4a846dc18d8b8ed754fe7142', units: 'imperial', containerid: 'openweathermap-widget-15', }); (function () { var script = document.createElement('script'); script.async = true; script.charset = "utf-8"; script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js"; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s); })();
+        // $("#openweathermap-widget-9").append(windowWidget);
+
+    });
+
     var queryURL = 'https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=public+restroom&location=' + address + ' ' + city + ' ' + state + '&radius=5000&limit=15&attributes=gender_neutral_restrooms';
     $.ajax({
         url: queryURL,

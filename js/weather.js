@@ -36,6 +36,7 @@ function initMap() {
                 var weatherCityId = response.id;
 
                 console.log(weatherCityId);
+                $('#openweathermap-widget-15').empty();
                 // newWeatherDiv.append(name + currentTemp);
                 // $("#weather").append(newWeatherDiv);
                 window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; window.myWidgetParam.push({ id: 15, cityid: weatherCityId, appid: '945c3adf4a846dc18d8b8ed754fe7142', units: 'imperial', containerid: 'openweathermap-widget-15', }); (function () { var script = document.createElement('script'); script.async = true; script.charset = "utf-8"; script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js"; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s); })();
@@ -146,6 +147,7 @@ function initMapOnSubmit(address, city, state) {
             var weatherCityId = response.id;
 
             console.log(weatherCityId);
+            $('#openweathermap-widget-15').empty();
             // newWeatherDiv.append(name + currentTemp);
             // $("#weather").append(newWeatherDiv);
             window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; window.myWidgetParam.push({ id: 15, cityid: weatherCityId, appid: '945c3adf4a846dc18d8b8ed754fe7142', units: 'imperial', containerid: 'openweathermap-widget-15', }); (function () { var script = document.createElement('script'); script.async = true; script.charset = "utf-8"; script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js"; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s); })();

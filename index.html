@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <title>Starter Template - Materialize</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body>
+
+    <nav class="light-blue lighten-1" role="navigation">
+        <div class="nav-wrapper"><img id="logo-container" src="images/logo.png" class="brand-logo">
+            <ul class="nav right hide-on-med-and-down">
+                <li><a href="#weather-section">Weather</a></li>
+                <li><a href="#search-bar">Search Bar</a></li>
+                <li><a href="#results-section">Results</a></li>
+                <li><a href="#map">Map</a></li>
+            </ul>
+            <ul id="nav-mobile" class="nav sidenav">
+                <li><a href="#weather-section">Weather</a></li>
+                <li><a href="#search-bar">Search Bar</a></li>
+                <li><a href="#results-section">Results</a></li>
+                <li><a href="#map">Map</a></li>
+            </ul>
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+
+    <div class="section light-blue darken-4">
+        <div class="row">
+            <div id="weather-section" class="col s12 m5">
+                <h4 class="light-blue-text"><i class="material-icons">wb_sunny</i> Weather</h4>
+                    <div id="openweathermap-widget-15"></div>
+                    <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 15,cityid: '5391959',appid: '945c3adf4a846dc18d8b8ed754fe7142',units: 'imperial',containerid: 'openweathermap-widget-15',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
+            </div>
+
+            <div id="search-bar" class="col s12 m7">
+                <h4 class="center light-blue-text"><i class="material-icons">search</i> Search</h4>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s5">
+                                <input id="address" type="text" class="validate">
+                                <label for="address">Address</label>
+                            </div>
+                            <div class="input-field col s4">
+                                <input id="city" type="text" class="validate">
+                                <label for="city">City</label>
+                            </div>
+                            <div class="input-field col s2">
+                                <input id="state" type="text" class="validate">
+                                <label for="state">State</label>
+                            </div>
+                        </div>
+                        <button id="submit" class="btn-large waves-effect waves-light orange"><i
+                                class="material-icons right">location_searching</i>Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="results-section" class="col s12 m5">
+                <h4 class="light-blue-text"><i class="material-icons">list</i> Results</h4>
+                <div id="results"></div>
+            </div>
+            <div class="col s12 m7">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/yelp.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMaADkXGTjthhbPHVctBZQ22FQQgInOwc&callback=initMap" async
+    defer></script>
+
+</body>
+
+</html>

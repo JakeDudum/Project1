@@ -18,6 +18,7 @@ function initMap() {
                 position: pos,
                 map: map,
                 title: "You are here.",
+                animation: google.maps.Animation.DROP,
                 icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
             })
             marker.setMap(map);
@@ -55,6 +56,7 @@ function initMap() {
                         position: yelpPos,
                         map: map,
                         title: response.businesses[i].alias,
+                        animation: google.maps.Animation.DROP,
                         icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                     });
                     marker.setMap(map);
@@ -118,6 +120,7 @@ function initMapOnSubmit(address, city, state) {
             position: locationPos,
             map: map,
             title: "You are here.",
+            animation: google.maps.Animation.DROP,
             icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"
         })
         marker.setMap(map);
@@ -153,6 +156,7 @@ function initMapOnSubmit(address, city, state) {
                     position: yelpPos,
                     map: map,
                     title: response.businesses[i].alias,
+                    animation: google.maps.Animation.DROP,
                     icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                 });
                 marker.setMap(map);

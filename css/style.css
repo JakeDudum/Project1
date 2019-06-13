@@ -43,8 +43,19 @@ h1, h2, h3, h4, h5, h6, p {
   transition: all 0.3s linear;
 }
 
-#openweathermap-widget-15 {
-  width: 100%;
+.placeImg {
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-right: 5px;
+}
+
+.submit-form {
+  float: left;
+}
+
+.widget-right {
+  width: 100% !important;
 }
 
 .results-div:hover {

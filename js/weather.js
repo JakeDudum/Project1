@@ -79,6 +79,7 @@
                     // function weatherWidget() {
                     // var city = $('#').val();
                     // if (city !== '') {
+                    
                     var apiKey = "e9d3c600773e0277e03e42289aeaf483";
                     $.ajax({
                         url: 'https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?lat=' + pos.lat + '&lon=' + pos.lng + '&units=imperial&appid=' + apiKey,
@@ -86,15 +87,23 @@
                         
                     }).then(function(response) {
                         console.log(response);
-                        var newWeatherDiv = $("<div>");
-                        var name = response.name + ": ";
-                        var currentTemp = response.main.temp + "F°";
-                        newWeatherDiv.append(name + currentTemp);
-                        $("#weather").append(newWeatherDiv);
+                        // var newWeatherDiv = $("<div>");
+                        // var name = response.name + ": ";
+                        // var currentTemp = response.main.temp + "F°";
+                        var weatherCityId = response.id;
+                        console.log(weatherCityId);
+                        // newWeatherDiv.append(name + currentTemp);
+                        // $("#weather").append(newWeatherDiv);
                         // var windowWidget = window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 9,cityid: '5391959',appid: 'e9d3c600773e0277e03e42289aeaf483',units: 'imperial',containerid: 'openweathermap-widget-9',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();
                         // $("#openweathermap-widget-9").append(windowWidget);
                         
                     });
+                    // function createWeatherWidget(cityId) {
+                    //     cityId = weatherCityId
+                    //     console.log(cityId);
+                    //     }
+                  
+
                 }, function () {
                     handleLocationError(true, infoWindow, map.getCenter());
                     
@@ -113,38 +122,6 @@
         
                         
 
-    // $('#openweathermap-widget-9').html(_show(response));
-    // _loadView('weather');
-    // })
-    // ;
-    // ;     
-    // } else {
-    // $('#error').html('Field cannot be empty');
-    // }
-    // }
-    // function show(response) {
-        
-    //     window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  
-    // window.myWidgetParam.push({
-    //     id: 9,
-    //     cityid: '5391959',
-    //     appid: 'e9d3c600773e0277e03e42289aeaf483',
-    //     units: 'imperial',
-    //     containerid: 'openweathermap-widget-9'
-    //  });  (function() {
-    //      var script = document.createElement('script');
-    //      script.async = true;
-    //      script.charset = "utf-8";
-    //      script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-    //      var s = document.getElementsByTagName('script')[0];
-    //      s.parentNode.insertBefore(script, s); 
-    //      })();
-    //     }       
-    //                 });
-    //             }
-    //         }
-
-    //     
-
+  
 
  

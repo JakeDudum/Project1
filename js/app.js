@@ -12,31 +12,81 @@ firebase.initializeApp(firebaseConfig);
 
 var database = firebase.database();
 
-$(document).on('click', ".submit-user-review", function () {
-    event.preventDefault();
-    var reviewDiv = $("<div>");
-    var userName = $('#user-name').val().trim();
-    var userNameDiv = $("<p>").text(userName);
-    var userReview = $('#user-review').val().trim();
-    var userReviewDiv = $('<p>').text(userReview);
+var ReviewID;
 
-    reviewDiv.append(userNameDiv, userReviewDiv);
+$('select').formSelect();
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+  if (event.target == modal2) {
+    modal2.style.display = "none";
+  }
+}
+
+// Get the modal
+var modal2 = document.getElementById("myModal2");
+
+// Get the <span> element that closes the modal
+var span2 = document.getElementsByClassName("close2")[0];
+
+// When the user clicks on <span> (x), close the modal
+span2.onclick = function() {
+  modal2.style.display = "none";
+}
+
+$(document).on('click', "#submit-review", function () {
+    event.preventDefault();
+    var userName = $('#userName').val().trim();
+    var userRating = $('#userRating').val();
+    var userReview = $('#userReview').val().trim();
 
     if (userName.length > 0 && userReview.length > 0) {
-        database.ref($(this).attr("data-id")).push({
+        database.ref(ReviewID).push({
             name: userName,
+            rating: userRating,
             review: userReview
         })
     }
+    modal.style.display = "none";
+    $('#userName').val("");
+    $('#userReview').val("");
 });
 
-$(document).on('click', ".submit-reviews", function () {
+$(document).on('click', ".see-reviews", function() {
     event.preventDefault();
-    var id = $(this).attr('data-id');
-    $("#" + id).removeClass('hide');
+    ReviewID = $(this).attr('data-id');
+    modal2.style.display = "block";
 
+    $("#reviews-list").empty();
 
+    var businessRef = database.ref(ReviewID);
+    businessRef.on('value', function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            var newDiv = $("<div>");
+            newDiv.append($("<p>").addClass("bigger").text("Name: " + childData.name), $("<p>").addClass("bigger").text("Rating: " + childData.rating), $("<p>").addClass('bigger').text("Review: " + childData.review), "<br>");
+            $("#reviews-list").append(newDiv);
+        });
+    });
+});
 
+$(document).on('click', ".add-review", function () {
+    event.preventDefault();
+    modal.style.display = "block";
+    ReviewID = $(this).attr('data-id');
     $(this).addClass('hide');
 });
 
@@ -113,9 +163,10 @@ function initMap() {
                     });
                     marker.setMap(map);
                     var newDiv = $("<div>").addClass('row results-div');
-                    var addReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                    var addReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                     var name = $("<p>").text(response.businesses[i].name).addClass("business");
                     var id = response.businesses[i].id;
+                    var rating = $("<p>").text("Rating: " + response.businesses[i].rating);
                     var imageDiv = $("<img>").attr('src', response.businesses[i].image_url);
                     imageDiv.addClass("col s4 placeImg");
                     var isOpen;
@@ -126,7 +177,7 @@ function initMap() {
                         isOpen = $("<p>").text("Closed!");
                     }
 
-                    var seeReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                    var seeReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                     seeReview.attr("data-id", id);
                     seeReview.css({ float: "left" });
                     seeReview.addClass('see-reviews');
@@ -134,38 +185,11 @@ function initMap() {
 
                     addReview.attr("data-id", id);
                     addReview.css({ float: "left" });
-                    addReview.addClass('submit-reviews');
+                    addReview.addClass('add-review');
                     addReview.text("Add Review");
 
-                    newDiv.append(name, imageDiv, isOpen, seeReview, addReview);
+                    newDiv.append(name, imageDiv, isOpen, rating, seeReview, addReview);
 
-                    var inputField1 = $("<div>").addClass('input-field');
-                    var inputField2 = $("<div>").addClass('input-field');
-                    var form = $("<form>").addClass('col s8 submit-form');
-                    form.attr('id', id);
-                    var userNameInput = $('<input>').attr('id', 'userName');
-                    userNameInput.attr('type', 'text');
-                    userNameInput.addClass('row');
-                    var userReviewInput = $('<textarea>').attr("id", 'userReview');
-                    userReviewInput.addClass('row materialize-textarea');
-                    var nameLabel = $('<label>').attr('for', 'username');
-                    nameLabel.text("Name");
-                    var reviewLabel = $('<label>').attr('for', 'userReview');
-                    reviewLabel.text("Review");
-
-                    var submitReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
-                    submitReview.attr("data-id", id);
-                    submitReview.css({ float: "left" });
-                    submitReview.addClass('submit-reviews');
-                    submitReview.text("Submit Review");
-
-                    inputField1.append(userNameInput, nameLabel);
-                    inputField2.append(userReviewInput, reviewLabel);
-
-                    form.append(inputField1, inputField2, submitReview);
-                    form.addClass('hide');
-
-                    newDiv.append(form);
                     $("#results").append(newDiv);
                 }
             })
@@ -205,47 +229,19 @@ function initMap() {
                         imageDiv.attr('src', photoURL);
                         var id = response.results[i].place_id;
 
-                        var seeReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                        var seeReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                         seeReview.attr("data-id", id);
                         seeReview.css({ float: "left" });
                         seeReview.addClass('see-reviews');
                         seeReview.text("See Reviews");
 
-                        var addReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                        var addReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                         addReview.attr("data-id", id);
                         addReview.css({ float: "left" });
-                        addReview.addClass('submit-reviews');
+                        addReview.addClass('add-review');
                         addReview.text("Add Review");
 
                         newDiv.append(name, imageDiv, rating, seeReview, addReview);
-
-                        var inputField1 = $("<div>").addClass('input-field');
-                        var inputField2 = $("<div>").addClass('input-field');
-                        var form = $("<form>").addClass('col s8 submit-form');
-                        form.attr('id', id);
-                        var userNameInput = $('<input>').attr('id', 'userName');
-                        userNameInput.attr('type', 'text');
-                        userNameInput.addClass('row');
-                        var userReviewInput = $('<textarea>').attr("id", 'userReview');
-                        userReviewInput.addClass('row materialize-textarea');
-                        var nameLabel = $('<label>').attr('for', 'username');
-                        nameLabel.text("Name");
-                        var reviewLabel = $('<label>').attr('for', 'userReview');
-                        reviewLabel.text("Review");
-
-                        var submitReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
-                        submitReview.attr("data-id", id);
-                        submitReview.css({ float: "left" });
-                        submitReview.addClass('submit-reviews');
-                        submitReview.text("Submit Review");
-
-                        inputField1.append(userNameInput, nameLabel);
-                        inputField2.append(userReviewInput, reviewLabel);
-
-                        form.append(inputField1, inputField2, submitReview);
-                        form.addClass('hide');
-
-                        newDiv.append(form);
 
                         $("#results2").append(newDiv);
                     }
@@ -335,6 +331,7 @@ function initMapOnSubmit(address, city, state) {
                 var name = $("<p>").text(response.businesses[i].name);
                 name.addClass("business");
                 var id = response.businesses[i].id;
+                var rating = $("<p>").text("Rating: " + response.businesses[i].rating);
                 var imageDiv = $("<img>").addClass("placeImg");
                 imageDiv.attr('src', response.businesses[i].image_url);
                 var isOpen;
@@ -344,7 +341,7 @@ function initMapOnSubmit(address, city, state) {
                 else {
                     isOpen = $("<p>").text("Closed!");
                 }
-                var seeReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                var seeReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                 seeReview.attr("data-id", id);
                 seeReview.css({ float: "left" });
                 seeReview.addClass('see-reviews');
@@ -352,36 +349,10 @@ function initMapOnSubmit(address, city, state) {
 
                 addReview.attr("data-id", id);
                 addReview.css({ float: "left" });
-                addReview.addClass('submit-reviews');
+                addReview.addClass('add-review');
                 addReview.text("Add Review");
-                newDiv.append(name, imageDiv, isOpen, addReview);
+                newDiv.append(name, imageDiv, isOpen, rating, seeReview, addReview);
 
-                var inputField1 = $("<div>").addClass('input-field');
-                var inputField2 = $("<div>").addClass('input-field');
-                var form = $("<form>").addClass('submit-form');
-                form.attr('id', id);
-                var userNameInput = $('<input>').attr('id', 'userName');
-                userNameInput.attr('type', 'text');
-                var userReviewInput = $('<textarea>').attr("id", 'userReview');
-                userReviewInput.addClass('materialize-textarea');
-                var nameLabel = $('<label>').attr('for', 'username');
-                nameLabel.text("Name");
-                var reviewLabel = $('<label>').attr('for', 'userReview');
-                reviewLabel.text("Review");
-
-                var submitReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
-                submitReview.attr("data-id", id);
-                submitReview.css({ float: "left" });
-                submitReview.addClass('submit-reviews');
-                submitReview.text("Submit Review");
-
-                inputField1.append(userNameInput, nameLabel);
-                inputField2.append(userReviewInput, reviewLabel);
-
-                form.append(inputField1, inputField2, submitReview);
-                form.addClass('hide');
-
-                newDiv.append(form);
                 $("#results").append(newDiv);
             }
         });
@@ -419,47 +390,19 @@ function initMapOnSubmit(address, city, state) {
                     imageDiv.attr('src', photoURL);
                     var id = response.results[i].place_id;
 
-                    var seeReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                    var seeReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                     seeReview.attr("data-id", id);
                     seeReview.css({ float: "left" });
                     seeReview.addClass('see-reviews');
                     seeReview.text("See Reviews");
 
-                    var addReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                    var addReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                     addReview.attr("data-id", id);
                     addReview.css({ float: "left" });
-                    addReview.addClass('submit-reviews');
+                    addReview.addClass('add-review');
                     addReview.text("Add Review");
 
                     newDiv.append(name, imageDiv, rating, seeReview, addReview);
-
-                    var inputField1 = $("<div>").addClass('input-field');
-                    var inputField2 = $("<div>").addClass('input-field');
-                    var form = $("<form>").addClass('col s8 submit-form');
-                    form.attr('id', id);
-                    var userNameInput = $('<input>').attr('id', 'userName');
-                    userNameInput.attr('type', 'text');
-                    userNameInput.addClass('row');
-                    var userReviewInput = $('<textarea>').attr("id", 'userReview');
-                    userReviewInput.addClass('row materialize-textarea');
-                    var nameLabel = $('<label>').attr('for', 'username');
-                    nameLabel.text("Name");
-                    var reviewLabel = $('<label>').attr('for', 'userReview');
-                    reviewLabel.text("Review");
-
-                    var submitReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
-                    submitReview.attr("data-id", id);
-                    submitReview.css({ float: "left" });
-                    submitReview.addClass('submit-reviews');
-                    submitReview.text("Submit Review");
-
-                    inputField1.append(userNameInput, nameLabel);
-                    inputField2.append(userReviewInput, reviewLabel);
-
-                    form.append(inputField1, inputField2, submitReview);
-                    form.addClass('hide');
-
-                    newDiv.append(form);
 
                     $("#results2").append(newDiv);
                 }
@@ -472,8 +415,8 @@ $("#submit").on("click", function () {
     event.preventDefault();
     $("#results").empty();
     $("#results2").empty();
-    var address = $("#address").val();
-    var city = $("#city").val();
+    var address = $("#address").val().trim();
+    var city = $("#city").val().trim();
     var state = $("#state").val();
 
     initMapOnSubmit(address, city, state);

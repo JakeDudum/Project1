@@ -31,6 +31,9 @@ window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
+  if (event.target == modal2) {
+    modal2.style.display = "none";
+  }
 }
 
 // Get the modal
@@ -42,13 +45,6 @@ var span2 = document.getElementsByClassName("close2")[0];
 // When the user clicks on <span> (x), close the modal
 span2.onclick = function() {
   modal2.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal2) {
-    modal2.style.display = "none";
-  }
 }
 
 $(document).on('click', "#submit-review", function () {
@@ -167,7 +163,7 @@ function initMap() {
                     });
                     marker.setMap(map);
                     var newDiv = $("<div>").addClass('row results-div');
-                    var addReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                    var addReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                     var name = $("<p>").text(response.businesses[i].name).addClass("business");
                     var id = response.businesses[i].id;
                     var rating = $("<p>").text("Rating: " + response.businesses[i].rating);
@@ -181,7 +177,7 @@ function initMap() {
                         isOpen = $("<p>").text("Closed!");
                     }
 
-                    var seeReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                    var seeReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                     seeReview.attr("data-id", id);
                     seeReview.css({ float: "left" });
                     seeReview.addClass('see-reviews');
@@ -232,13 +228,13 @@ function initMap() {
                         imageDiv.attr('src', photoURL);
                         var id = response.results[i].place_id;
 
-                        var seeReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                        var seeReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                         seeReview.attr("data-id", id);
                         seeReview.css({ float: "left" });
                         seeReview.addClass('see-reviews');
                         seeReview.text("See Reviews");
 
-                        var addReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                        var addReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                         addReview.attr("data-id", id);
                         addReview.css({ float: "left" });
                         addReview.addClass('add-review');
@@ -344,7 +340,7 @@ function initMapOnSubmit(address, city, state) {
                 else {
                     isOpen = $("<p>").text("Closed!");
                 }
-                var seeReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                var seeReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                 seeReview.attr("data-id", id);
                 seeReview.css({ float: "left" });
                 seeReview.addClass('see-reviews');
@@ -393,13 +389,13 @@ function initMapOnSubmit(address, city, state) {
                     imageDiv.attr('src', photoURL);
                     var id = response.results[i].place_id;
 
-                    var seeReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                    var seeReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                     seeReview.attr("data-id", id);
                     seeReview.css({ float: "left" });
                     seeReview.addClass('see-reviews');
                     seeReview.text("See Reviews");
 
-                    var addReview = $("<button>").addClass("btn-small waves-effect waves-light orange reviews");
+                    var addReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                     addReview.attr("data-id", id);
                     addReview.css({ float: "left" });
                     addReview.addClass('add-review');

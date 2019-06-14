@@ -27,6 +27,16 @@ h1, h2, h3, h4, h5, h6, p {
   max-height: 100%;
 }
 
+.btn-large {
+  background-image: linear-gradient(to right, #80deea, #3E92CC);
+  transition: all 1s linear;
+}
+
+.btn-large:hover {
+  background-image: none;
+  background-color: #00bcd4;
+}
+
 #map {
   height: 600px;
   max-width: 100%;
@@ -39,10 +49,6 @@ h1, h2, h3, h4, h5, h6, p {
   margin-bottom: 15px;
   padding: 5px;
   transition: all 0.3s linear;
-}
-
-.validate, .select-dropdown {
-  color: white !important;
 }
 
 .placeImg {

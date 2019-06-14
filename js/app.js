@@ -162,13 +162,13 @@ function initMap() {
                         icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                     });
                     marker.setMap(map);
-                    var newDiv = $("<div>").addClass('row results-div');
+                    var newDiv = $("<div>").addClass('row results-div card-panel grey lighten-5 hoverable');
                     var addReview = $("<button>").addClass("btn-large waves-effect waves-light reviews");
                     var name = $("<p>").text(response.businesses[i].name).addClass("business");
                     var id = response.businesses[i].id;
                     var rating = $("<p>").text("Rating: " + response.businesses[i].rating);
                     var imageDiv = $("<img>").attr('src', response.businesses[i].image_url);
-                    imageDiv.addClass("col s4 placeImg");
+                    imageDiv.addClass("placeImg");
                     var isOpen;
                     if (response.businesses[i].is_closed === false) {
                         isOpen = $("<p>").text("Open!");
@@ -220,11 +220,11 @@ function initMap() {
                         var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8"
 
                         var newDiv = $("<div>");
-                        newDiv.addClass('row results-div');
+                        newDiv.addClass('row results-div card-panel grey lighten-5 hoverable');
                         var name = $("<p>").text(response.results[i].name);
                         var rating = $("<p>").text("Rating: " + response.results[i].rating);
                         name.addClass("business");
-                        var imageDiv = $("<img>").addClass("col s4 placeImg");
+                        var imageDiv = $("<img>").addClass("placeImg");
                         imageDiv.attr('src', photoURL);
                         var id = response.results[i].place_id;
 
@@ -324,9 +324,9 @@ function initMapOnSubmit(address, city, state) {
                 });
                 marker.setMap(map);
                 var newDiv = $("<div>");
-                newDiv.addClass('row results-div')
+                newDiv.addClass('row results-div card-panel grey lighten-5 hoverable')
                 var addReview = $("<button>");
-                addReview.addClass("btn-small waves-effect waves-light orange reviews")
+                addReview.addClass("btn-small waves-effect waves-light reviews");
                 var name = $("<p>").text(response.businesses[i].name);
                 name.addClass("business");
                 var id = response.businesses[i].id;
@@ -381,11 +381,11 @@ function initMapOnSubmit(address, city, state) {
                     var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8";
 
                     var newDiv = $("<div>");
-                    newDiv.addClass('row results-div');
+                    newDiv.addClass('row results-div card-panel grey lighten-5 hoverable');
                     var name = $("<p>").text(response.results[i].name);
                     var rating = $("<p>").text("Rating: " + response.results[i].rating);
                     name.addClass("business");
-                    var imageDiv = $("<img>").addClass("col s4 placeImg");
+                    var imageDiv = $("<img>").addClass("placeImg");
                     imageDiv.attr('src', photoURL);
                     var id = response.results[i].place_id;
 

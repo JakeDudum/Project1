@@ -326,7 +326,7 @@ function initMapOnSubmit(address, city, state) {
                 var newDiv = $("<div>");
                 newDiv.addClass('row results-div card-panel grey lighten-5 hoverable')
                 var addReview = $("<button>");
-                addReview.addClass("btn-small waves-effect waves-light reviews");
+                addReview.addClass("btn-large waves-effect waves-light reviews");
                 var name = $("<p>").text(response.businesses[i].name);
                 name.addClass("business");
                 var id = response.businesses[i].id;

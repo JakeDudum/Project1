@@ -41,6 +41,7 @@ h1, h2, h3, h4, h5, h6, p {
   height: 600px;
   max-width: 100%;
 }
+
 .results-div {
   display: inline-block;
   background-color: white;
@@ -52,8 +53,8 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .placeImg {
-  width: 200px;
-  height: 200px;
+  width: 175px;
+  height: 175px;
   float: left;
   margin-right: 5px;
 }
@@ -67,7 +68,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .results-div:hover {
-  box-shadow: 0px 0px 20px #e1f5fe;
+  box-shadow: 0px 0px 20px grey;
 }
 
 .business {

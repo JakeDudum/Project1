@@ -1,5 +1,5 @@
 # Where2P
-![Screenshot of Finalized Site](images/Where2P_Finalized.PNG)
+![Demo of Finalized Site](images/demo.gif)
 
 ## About
 We created this app based on the lack of resources available for those who need to use a bathroom in a public setting on the go. Where2P provides a list of possible restrooms which are pulled from both the Yelp and Google Places API calls using AJAX. The list is based on the current location of the user obtained from the Google Maps API. The user is able to view the suggested locations by Yelp marked by blue markers and Google locations marked by red markers. The user's current location is marked by a purple marker. 

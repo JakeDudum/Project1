@@ -91,7 +91,7 @@ $(document).on('click', ".add-review", function () {
 });
 
 
-var map, infoWindow;
+var map;
 var pos = {};
 
 function initMap() {
@@ -157,7 +157,7 @@ function initMap() {
                     var marker = new google.maps.Marker({
                         position: yelpPos,
                         map: map,
-                        title: response.businesses[i].alias,
+                        title: response.businesses[i].name,
                         animation: google.maps.Animation.DROP,
                         icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                     });
@@ -193,7 +193,6 @@ function initMap() {
                     $("#results").append(newDiv);
                 }
             })
-
             $.ajax({
                 url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Resroom&location=" + pos.lat + "," + pos.lng + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8",
                 method: "GET"
@@ -424,5 +423,4 @@ $("#submit").on("click", function () {
     $("#address").val("");
     $("#city").val("");
     $("#state").val("");
-
 })

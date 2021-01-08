@@ -258,7 +258,6 @@ function initMapOnSubmit(address, city, state) {
         url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + ",+" + city + ",+" + state + "&key=AIzaSyAz23lQswC8r0KGNmRE09W2dzLYVeqWoT0",
         method: "GET"
     }).then(function (response) {
-        console.log(response);
         locationPos = {
             lat: response.results[0].geometry.location.lat,
             lng: response.results[0].geometry.location.lng

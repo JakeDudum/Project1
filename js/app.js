@@ -194,7 +194,7 @@ function initMap() {
                 }
             })
             $.ajax({
-                url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Resroom&location=" + pos.lat + "," + pos.lng + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8",
+                url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Resroom&location=" + pos.lat + "," + pos.lng + "&key=AIzaSyAz23lQswC8r0KGNmRE09W2dzLYVeqWoT0",
                 method: "GET"
             }).then(function (response) {
 
@@ -217,7 +217,7 @@ function initMap() {
                     } else {
                         photoRef = response.results[i].photos[0]["photo_reference"];
 
-                        var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8"
+                        var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyAz23lQswC8r0KGNmRE09W2dzLYVeqWoT0"
 
                         var newDiv = $("<div>");
                         newDiv.addClass('row results-div card-panel grey lighten-5 hoverable');
@@ -255,9 +255,10 @@ function initMapOnSubmit(address, city, state) {
     var locationPos = {};
 
     $.ajax({
-        url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + ",+" + city + ",+" + state + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8",
+        url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + ",+" + city + ",+" + state + "&key=AIzaSyAz23lQswC8r0KGNmRE09W2dzLYVeqWoT0",
         method: "GET"
     }).then(function (response) {
+        console.log(response);
         locationPos = {
             lat: response.results[0].geometry.location.lat,
             lng: response.results[0].geometry.location.lng
@@ -357,7 +358,7 @@ function initMapOnSubmit(address, city, state) {
         });
 
         $.ajax({
-            url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Restroom&location=" + locationPos.lat + "," + locationPos.lng + "&radius=5000&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8",
+            url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Restroom&location=" + locationPos.lat + "," + locationPos.lng + "&radius=5000&key=AIzaSyAz23lQswC8r0KGNmRE09W2dzLYVeqWoT0",
             method: "GET"
         }).then(function (response) {
             for (var i = 0; i < response.results.length; i++) {
@@ -378,7 +379,7 @@ function initMapOnSubmit(address, city, state) {
 
                 } else {
                     photoRef = response.results[i].photos[0]["photo_reference"];
-                    var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyBDpFonM0-HhfZ_QmeXBNWkYDHsSL2sxV8";
+                    var photoURL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoRef + "&key=AIzaSyAz23lQswC8r0KGNmRE09W2dzLYVeqWoT0";
 
                     var newDiv = $("<div>");
                     newDiv.addClass('row results-div card-panel grey lighten-5 hoverable');

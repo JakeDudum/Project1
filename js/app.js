@@ -122,7 +122,7 @@ function initMap() {
             var apiKey = "e9d3c600773e0277e03e42289aeaf483";
 
             $.ajax({
-                url: 'https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?lat=' + pos.lat + '&lon=' + pos.lng + '&units=imperial&appid=' + apiKey,
+                url: 'api.openweathermap.org/data/2.5/weather?lat=' + pos.lat + '&lon=' + pos.lng + '&units=imperial&appid=' + apiKey,
                 method: "GET"
 
             }).then(function (response) {
@@ -141,7 +141,7 @@ function initMap() {
                 })();
             });
 
-            var queryURL = 'https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=' + pos.lat + '&longitude=' + pos.lng + '&term=public+restroom&reviews&radius=10000&limit=15&attributes=gender_neutral_restrooms';
+            var queryURL = 'https://api.yelp.com/v3/businesses/search?latitude=' + pos.lat + '&longitude=' + pos.lng + '&term=public+restroom&reviews&radius=10000&limit=15&attributes=gender_neutral_restrooms';
             $.ajax({
                 url: queryURL,
                 method: "GET",
@@ -194,7 +194,7 @@ function initMap() {
                 }
             })
             $.ajax({
-                url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Resroom&location=" + pos.lat + "," + pos.lng + "&key=AIzaSyAz23lQswC8r0KGNmRE09W2dzLYVeqWoT0",
+                url: "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Resroom&location=" + pos.lat + "," + pos.lng + "&key=AIzaSyAz23lQswC8r0KGNmRE09W2dzLYVeqWoT0",
                 method: "GET"
             }).then(function (response) {
 
@@ -281,7 +281,7 @@ function initMapOnSubmit(address, city, state) {
 
         var apiKey = "e9d3c600773e0277e03e42289aeaf483";
         $.ajax({
-            url: 'https://cors-anywhere.herokuapp.com/api.openweathermap.org/data/2.5/weather?lat=' + locationPos.lat + '&lon=' + locationPos.lng + '&units=imperial&appid=' + apiKey,
+            url: 'api.openweathermap.org/data/2.5/weather?lat=' + locationPos.lat + '&lon=' + locationPos.lng + '&units=imperial&appid=' + apiKey,
             method: "GET"
 
         }).then(function (response) {
@@ -302,7 +302,7 @@ function initMapOnSubmit(address, city, state) {
 
         });
 
-        var queryURL = 'https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=public+restroom&location=' + address + ' ' + city + ' ' + state + '&radius=5000&limit=15&attributes=gender_neutral_restrooms';
+        var queryURL = 'https://api.yelp.com/v3/businesses/search?term=public+restroom&location=' + address + ' ' + city + ' ' + state + '&radius=5000&limit=15&attributes=gender_neutral_restrooms';
         $.ajax({
             url: queryURL,
             method: "GET",
@@ -357,7 +357,7 @@ function initMapOnSubmit(address, city, state) {
         });
 
         $.ajax({
-            url: "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Restroom&location=" + locationPos.lat + "," + locationPos.lng + "&radius=5000&key=AIzaSyAz23lQswC8r0KGNmRE09W2dzLYVeqWoT0",
+            url: "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Public+Restroom&location=" + locationPos.lat + "," + locationPos.lng + "&radius=5000&key=AIzaSyAz23lQswC8r0KGNmRE09W2dzLYVeqWoT0",
             method: "GET"
         }).then(function (response) {
             for (var i = 0; i < response.results.length; i++) {
